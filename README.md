@@ -12,7 +12,25 @@
 [contributor-shield]:https://img.shields.io/github/contributors/sailpoint-oss/repo-template?label=Contributors
 [contributors-url]:https://github.com/sailpoint-oss/repo-template/graphs/contributors
 
-# application-title-here
+# ISC Search Loopback Connector
+
+## Overview
+SaaS loopback connector that enables you to define entitlements as ISC search queries. Identities returned by each of the configured search queries will have a Search Loopback 'account' and the specified 'entitlement'. If the same identity is returned by multiple different search queries then they will have a single account with multiple entitlements.
+
+Admins can specify they would like to assign the entitlement to the manager of the identities returned by a search query by appending '_manager' to the end of the configured entitlement name. If multiple returned identities have the same manager, the corresponding manager will just have the one entitlement assignment.
+
+## Use Cases
+Main use case of this connector is to expand the functionality of role membership criteria. Currently, ISC does not support operations like 'does not contain' or date ranges in the assignment criteria for roles but does allow you to assign roles based on the entitlements an identity is assigned. With this source, you can configure a search query as an entitlement that returns the population of identities you would like to include in your role membership. Then in the criteria mapping, simply configure the corresponding entitlement type to assign the role to those identities. 
+
+### Source Entitlement Config
+![Source Entitlement Config](./assets/images/entitlement_mapping_config.png)
+
+### Search Loopback Account
+![Account Example](./assets/images/account.png)
+
+### Role Criteria Example
+![Role Criteria Example](./assets/images/role_criteria.png)
+
 [Explore the docs »](https://your-link-to-colab-topic-here)
 
 [New to the CoLab? Click here »](https://developer.sailpoint.com/discuss/t/about-the-sailpoint-developer-community-colab/11230)
