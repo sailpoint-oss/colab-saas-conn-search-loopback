@@ -1,0 +1,129 @@
+{
+	"name": "saas-conn-search-loopback",
+	"commands": [
+		"std:account:list",
+		"std:account:read",
+		"std:test-connection",
+		"std:entitlement:list",
+		"std:entitlement:read"
+	],
+	"sourceConfig": [
+		{
+			"type": "menu",
+			"label": "Connection Settings",
+			"items": [
+				{
+					"type": "section",
+					"sectionTitle": "Authentication",
+					"sectionHelpMessage": "Provide client credentials to connect to SailPoint's APIs",
+					"items": [
+						{
+							"key": "baseurl",
+							"label": "ISC API URL",
+							"type": "url",
+							"required": true
+						},
+						{
+							"key": "clientId",
+							"label": "Client ID",
+							"type": "text",
+							"required": true
+						},
+						{
+							"key": "clientSecret",
+							"label": "Client Secret",
+							"type": "secret",
+							"required": true
+						}
+					]
+				}
+			]
+		},
+		{
+			"type": "menu",
+			"label": "Entitlement Mappings",
+			"items": [
+				{
+					"type": "section",
+					"sectionTitle": "Entitlement Search Queries",
+					"sectionHelpMessage": "Configure the connector's entitlement names and corresponding search queries representing what identities should reflect as having that entitlement.\n\nAppend _manager to the entitlement name to assign the entitlement to the manager of the identities returned by the search result.",
+					"items": [
+						{
+							"key": "entitlementMappings",
+							"label": "Entitlement Search Mappings",
+							"type": "keyValue",
+							"keyValueKey": {
+								"key": "name",
+								"label": "Entitlement Name",
+								"type": "text",
+								"required": false,
+								"maxlength": "4096"
+							},
+							"keyValueValue": {
+								"key": "query",
+								"label": "Search Query",
+								"type": "text",
+								"required": false,
+								"maxlength": "4096"
+							}
+						}
+					]
+				}
+			]
+		}
+	],
+	"accountSchema":{
+		"displayAttribute": "employeeNumber",
+		"identityAttribute": "id",
+		"groupAttribute": "entitlements",
+		"attributes":[
+			{
+				"name": "id",
+				"type": "string",
+				"description": "identity id"
+			},
+			{
+				"name": "displayName",
+				"type": "string",
+				"description": "identity display name"
+			},
+			{
+				"name": "employeeNumber",
+				"type": "string",
+				"description": "identity employee number"
+			},
+			{
+				"name": "uid",
+				"type": "string",
+				"description": "identity uid"
+			},
+			{
+				"name": "entitlements",
+				"type": "string",
+				"description": "entitlements aggregated through search",
+				"managed": false,
+				"entitlement": true,
+				"multi": true
+			}
+		]
+	},
+	"entitlementSchemas": [
+		{
+			"type": "group",
+			"displayAttribute": "name",
+			"identityAttribute": "name",
+			"attributes": [
+				{
+					"name": "name",
+					"type": "string",
+					"description": "unique id"
+				},
+				{
+					"name": "query",
+					"type": "string",
+					"description": "search query"
+				}
+			]
+		}
+	]
+}
